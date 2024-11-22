@@ -83,17 +83,24 @@ Create-Directories
 # Install .NET Framework 4.8 if needed
 function Install-DotNet48 {
     $dotNetKey = 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full'
+    $installerPath = "$($PSScriptRoot)\ndp48-devpack-enu.exe"
+    
     if ((Get-ItemProperty -Path $dotNetKey -Name Release -ErrorAction SilentlyContinue).Release -lt 528040) {
-        Start-Process -FilePath "$($PSScriptRoot)\ndp48-devpack-enu.exe" `
-                      -ArgumentList "/q /norestart" `
-                      -Wait `
-                      -Verb RunAs > $null
+        if (Test-Path -Path $installerPath) {
+            Start-Process -FilePath $installerPath `
+                          -ArgumentList "/q /norestart" `
+                          -Wait `
+                          -Verb RunAs > $null
+        } else {
+            Write-Output "Installer file ndp48-devpack-enu.exe is missing. Please ensure the installer is in the script directory."
+        }
     } else {
         Write-Output ".NET Framework 4.8 is already installed."
     }
 }
 
 Install-DotNet48
+
 
 # Function to Install Executable
 function Install-Executable ($installerPath, $installArgs) {
