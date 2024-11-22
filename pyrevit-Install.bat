@@ -19,7 +19,7 @@ REM --> We have admin privileges
 cls
 
 REM --> Ensure PowerShell script exists
-if not exist "%~dp0pyrevit4-Install-Main.ps1" (
+if not exist "%~dp0pyrevit-Install-Main.ps1" (
     echo PowerShell script not found.
     echo Press any key to exit.
     pause >nul
@@ -27,4 +27,4 @@ if not exist "%~dp0pyrevit4-Install-Main.ps1" (
 )
 
 REM --> Run the PowerShell script
-powershell.exe -executionpolicy bypass -Command "& '%~dp0pyrevit4-Install-Main.ps1'"
+powershell.exe -executionpolicy bypass -Command "& '%~dp0pyrevit-Install-Main.ps1'"
